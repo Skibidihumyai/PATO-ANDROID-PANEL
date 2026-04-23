@@ -9,10 +9,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Pato Panel">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#ff3b30">
+    <meta name="theme-color" content="#e30000">
     
     <!-- Web App Manifest (inline) สำหรับ Android Add to Home Screen -->
-    <link rel="manifest" href="data:application/manifest+json,{ %22name%22: %22PATO ANDROID V.3%22, %22short_name%22: %22PATO%22, %22description%22: %22PATO Android Panel Ultimate%22, %22start_url%22: %22.%22, %22display%22: %22standalone%22, %22background_color%22: %22%23020408%22, %22theme_color%22: %22%23ff3b30%22, %22icons%22: [ { %22src%22: %22https://i.postimg.cc/vZmhzDTv/IMG-20260421-111123-019.jpg%22, %22sizes%22: %22512x512%22, %22type%22: %22image/jpeg%22, %22purpose%22: %22any%20maskable%22 } ] }">
+    <link rel="manifest" href="data:application/manifest+json,{ %22name%22: %22PATO ANDROID V.3%22, %22short_name%22: %22PATO%22, %22description%22: %22PATO Android Panel Ultimate%22, %22start_url%22: %22.%22, %22display%22: %22standalone%22, %22background_color%22: %22%23020408%22, %22theme_color%22: %22%23e30000%22, %22icons%22: [ { %22src%22: %22https://i.postimg.cc/vZmhzDTv/IMG-20260421-111123-019.jpg%22, %22sizes%22: %22512x512%22, %22type%22: %22image/jpeg%22, %22purpose%22: %22any%20maskable%22 } ] }">
     
     <!-- Apple Touch Icon -->
     <link rel="apple-touch-icon" href="https://i.postimg.cc/vZmhzDTv/IMG-20260421-111123-019.jpg">
@@ -24,17 +24,17 @@
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap');
 
         :root {
-            --accent: #ff3b30;
-            --accent2: #ff6d00;
-            --accent3: #ff6d00;
+            --accent: #e30000;
+            --accent2: #8b0000;
+            --accent3: #8b0000;
             --bg-deep: #020408;
-            --bg-card: rgba(255,59,48,0.04);
-            --border: rgba(255,59,48,0.12);
-            --glow: 0 0 20px rgba(255,59,48,0.5);
-            --glow2: 0 0 20px rgba(255,109,0,0.5);
+            --bg-card: rgba(227,0,0,0.04);
+            --border: rgba(227,0,0,0.12);
+            --glow: 0 0 20px rgba(227,0,0,0.55);
+            --glow2: 0 0 20px rgba(139,0,0,0.5);
             --text-dim: #4a6070;
-            --accent-rgb: 255,59,48;
-            --accent2-rgb: 255,109,0;
+            --accent-rgb: 227,0,0;
+            --accent2-rgb: 139,0,0;
         }
 
         @keyframes gradMove { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
@@ -75,7 +75,7 @@
             letter-spacing:2px;
         }
         .toast-on { background:rgba(var(--accent-rgb),0.15); color:var(--accent); opacity:1!important; transform:translateY(0) scale(1)!important; box-shadow:var(--glow); border:1px solid rgba(var(--accent-rgb),0.3); }
-        .toast-off { background:rgba(255,109,0,0.15); color:var(--accent3); opacity:1!important; transform:translateY(0) scale(1)!important; box-shadow:0 0 20px rgba(255,109,0,0.4); border:1px solid rgba(255,109,0,0.3); }
+        .toast-off { background:rgba(139,0,0,0.18); color:#ff4444; opacity:1!important; transform:translateY(0) scale(1)!important; box-shadow:0 0 20px rgba(139,0,0,0.5); border:1px solid rgba(139,0,0,0.4); }
 
         .glass {
             background:rgba(2,8,15,0.9);
@@ -291,7 +291,7 @@
         .btn-action:hover { border-color:var(--accent); background:rgba(var(--accent-rgb),0.1); }
         .btn-action:active { transform:translateY(1px); background:rgba(var(--accent-rgb),0.2); }
         .btn-tag { font-size:8px; padding:3px 8px; border-radius:4px; font-family:'Orbitron'; }
-        .tag-ff { background:rgba(255,109,0,0.2); color:var(--accent3); border:1px solid rgba(255,109,0,0.3); }
+        .tag-ff { background:rgba(139,0,0,0.2); color:#cc2222; border:1px solid rgba(139,0,0,0.3); }
         .tag-max { background:rgba(var(--accent-rgb),0.15); color:var(--accent); border:1px solid rgba(var(--accent-rgb),0.3); }
 
         .footer-bar {
@@ -360,7 +360,7 @@
         }
         #cpp-log .log-green { color:#34c759; }
         #cpp-log .log-yellow { color:#ffd60a; }
-        #cpp-log .log-red { color:#ff3b30; }
+        #cpp-log .log-red { color:#e30000; }
         #cpp-log .log-dim { color:#2a4050; }
 
         .phase { display:none; }
@@ -418,7 +418,7 @@
         .game-choice-btn:hover { border-color:var(--accent); color:#fff; background:rgba(var(--accent-rgb),0.08); box-shadow:var(--glow); }
         .game-choice-btn:active { transform:scale(0.98); }
         .game-badge { font-size:8px; padding:4px 10px; border-radius:20px; }
-        .badge-ff { background:rgba(255,109,0,0.2); color:var(--accent3); }
+        .badge-ff { background:rgba(139,0,0,0.2); color:#cc2222; }
         .badge-max { background:rgba(var(--accent-rgb),0.15); color:var(--accent); }
 
         .modal-btn {
@@ -432,6 +432,168 @@
         ::-webkit-scrollbar { width:3px; }
         ::-webkit-scrollbar-track { background:transparent; }
         ::-webkit-scrollbar-thumb { background:rgba(var(--accent-rgb),0.2); border-radius:10px; }
+
+        /* ===== CONTROL PANEL ===== */
+        #ctrl-panel { display:none; width:96vw; max-width:800px; height:610px; flex-direction:column; overflow:hidden; position:relative; }
+
+        .cp-content { flex:1; overflow-y:auto; padding:20px; }
+
+        .cp-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px; }
+
+        .cp-action-btn {
+            padding:18px 14px; border-radius:10px;
+            border:1px solid var(--border); background:rgba(var(--accent-rgb),0.05);
+            color:var(--accent); font-family:'Orbitron'; font-size:10px; font-weight:700;
+            letter-spacing:2px; cursor:pointer; transition:all 0.3s;
+            display:flex; flex-direction:column; align-items:center; gap:8px;
+            position:relative; overflow:hidden;
+        }
+        .cp-action-btn::before {
+            content:''; position:absolute; top:0; left:-100%; width:100%; height:100%;
+            background:linear-gradient(90deg, transparent, rgba(var(--accent-rgb),0.15), transparent);
+            transition:left 0.5s;
+        }
+        .cp-action-btn:hover::before { left:100%; }
+        .cp-action-btn:hover { border-color:var(--accent); box-shadow:var(--glow); background:rgba(var(--accent-rgb),0.12); }
+        .cp-action-btn:active { transform:scale(0.97); }
+        .cp-action-btn .btn-icon { font-size:22px; }
+        .cp-action-btn.danger { color:#ff453a; border-color:rgba(255,69,58,0.3); }
+        .cp-action-btn.danger:hover { border-color:#ff453a; box-shadow:0 0 20px rgba(255,69,58,0.5); background:rgba(255,69,58,0.1); }
+
+        /* KEY LIST */
+        .key-list { background:rgba(0,0,0,0.4); border:1px solid var(--border); border-radius:10px; overflow:hidden; }
+        .key-list-header {
+            padding:10px 14px; font-family:'Orbitron'; font-size:9px; color:var(--text-dim);
+            letter-spacing:2px; border-bottom:1px solid var(--border);
+            display:grid; grid-template-columns:1fr 80px 75px 30px 30px;
+            background:rgba(var(--accent-rgb),0.03);
+        }
+        .key-row {
+            padding:11px 14px; border-bottom:1px solid rgba(255,255,255,0.03);
+            display:grid; grid-template-columns:1fr 80px 75px 30px 30px;
+            align-items:center; font-size:10px; font-family:'Share Tech Mono';
+            transition:background 0.2s;
+        }
+        .key-row:hover { background:rgba(var(--accent-rgb),0.04); }
+        .key-row:last-child { border-bottom:none; }
+        .key-val { color:var(--accent); font-size:9px; letter-spacing:1px; }
+        .key-type { color:#aaa; font-size:9px; }
+        .key-expire { color:var(--text-dim); font-size:9px; }
+        .key-del-btn {
+            background:transparent; border:1px solid rgba(255,69,58,0.3); color:#ff453a;
+            width:24px; height:24px; border-radius:5px; cursor:pointer;
+            display:flex; align-items:center; justify-content:center;
+            transition:all 0.2s; padding:0;
+        }
+        .key-del-btn:hover { background:rgba(255,69,58,0.15); box-shadow:0 0 10px rgba(255,69,58,0.4); }
+        .key-copy-btn {
+            background:transparent; border:1px solid rgba(var(--accent-rgb),0.25); color:var(--accent);
+            width:24px; height:24px; border-radius:5px; cursor:pointer;
+            display:flex; align-items:center; justify-content:center;
+            transition:all 0.2s; padding:0;
+        }
+        .key-copy-btn:hover { background:rgba(var(--accent-rgb),0.12); box-shadow:var(--glow); }
+        .key-copy-btn.copied { border-color:#34c759; color:#34c759; }
+        .admin-copy-btn {
+            background:transparent; border:1px solid rgba(var(--accent-rgb),0.25); color:var(--accent);
+            width:24px; height:24px; border-radius:5px; cursor:pointer;
+            display:flex; align-items:center; justify-content:center;
+            transition:all 0.2s; padding:0; flex-shrink:0;
+        }
+        .admin-copy-btn:hover { background:rgba(var(--accent-rgb),0.12); box-shadow:var(--glow); }
+
+        /* MODAL OVERLAY */
+        #cp-modal {
+            position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:2000;
+            display:none; align-items:center; justify-content:center;
+            backdrop-filter:blur(8px);
+        }
+        #cp-modal.show { display:flex; animation:floatUp 0.25s ease; }
+        .cp-modal-box {
+            background:#020408; border:1px solid var(--border); border-radius:14px;
+            padding:28px; width:320px; max-width:90vw;
+            box-shadow:0 0 60px rgba(var(--accent-rgb),0.15), 0 30px 60px rgba(0,0,0,0.8);
+        }
+        .cp-modal-title { font-family:'Orbitron'; font-size:11px; color:var(--accent); letter-spacing:3px; margin-bottom:20px; text-shadow:var(--glow); }
+        .cp-input {
+            width:100%; padding:12px 14px; background:rgba(var(--accent-rgb),0.04);
+            border:1px solid rgba(var(--accent-rgb),0.2); color:#fff; border-radius:8px;
+            outline:none; font-family:'Share Tech Mono'; font-size:12px; letter-spacing:2px;
+            transition:border-color 0.3s, box-shadow 0.3s; margin-bottom:12px;
+        }
+        .cp-input:focus { border-color:var(--accent); box-shadow:var(--glow); }
+        .cp-label { font-size:9px; color:var(--text-dim); font-family:'Share Tech Mono'; letter-spacing:1px; margin-bottom:6px; display:block; }
+        .cp-select {
+            width:100%; padding:12px 14px; background:#020408;
+            color:#fff; border-radius:8px; border:1px solid rgba(var(--accent-rgb),0.2);
+            font-family:'Share Tech Mono'; font-size:11px; margin-bottom:12px;
+            outline:none; transition:border-color 0.3s;
+        }
+        .cp-select:focus { border-color:var(--accent); }
+        .cp-modal-btns { display:flex; gap:8px; margin-top:6px; }
+        .cp-modal-ok {
+            flex:1; padding:12px; border-radius:8px; border:1px solid var(--accent);
+            background:rgba(var(--accent-rgb),0.1); color:var(--accent);
+            font-family:'Orbitron'; font-size:9px; letter-spacing:3px; cursor:pointer;
+            transition:all 0.3s;
+        }
+        .cp-modal-ok:hover { box-shadow:var(--glow); background:rgba(var(--accent-rgb),0.2); }
+        .cp-modal-cancel {
+            flex:1; padding:12px; border-radius:8px; border:1px solid var(--border);
+            background:transparent; color:#888;
+            font-family:'Orbitron'; font-size:9px; letter-spacing:3px; cursor:pointer;
+            transition:all 0.2s;
+        }
+        .cp-modal-cancel:hover { border-color:#888; color:#fff; }
+
+        .cp-generated-key {
+            background:rgba(var(--accent-rgb),0.06); border:1px solid rgba(var(--accent-rgb),0.2);
+            border-radius:8px; padding:12px; font-family:'Share Tech Mono';
+            font-size:11px; color:var(--accent); letter-spacing:2px; text-align:center;
+            margin:12px 0; word-break:break-all;
+        }
+
+        .cp-stat-row {
+            display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:14px;
+        }
+        .cp-stat-card {
+            background:rgba(var(--accent-rgb),0.04); border:1px solid var(--border);
+            border-radius:10px; padding:14px; text-align:center;
+        }
+        .cp-stat-num { font-family:'Orbitron'; font-size:22px; font-weight:900; color:var(--accent); text-shadow:var(--glow); }
+        .cp-stat-lbl { font-size:8px; color:var(--text-dim); font-family:'Share Tech Mono'; letter-spacing:1px; margin-top:4px; }
+
+        .open-panel-btn {
+            width:100%; padding:13px; border-radius:8px; border:1px solid var(--accent);
+            background:linear-gradient(135deg, rgba(var(--accent-rgb),0.1), rgba(var(--accent2-rgb),0.1));
+            color:var(--accent); font-family:'Orbitron'; font-size:9px; font-weight:700;
+            letter-spacing:2px; cursor:pointer; transition:all 0.3s; margin-top:10px;
+            display:none; position:relative; overflow:hidden;
+        }
+        .open-panel-btn::before {
+            content:''; position:absolute; top:0; left:-100%; width:100%; height:100%;
+            background:linear-gradient(90deg, transparent, rgba(var(--accent-rgb),0.25), transparent);
+            transition:left 0.5s;
+        }
+        .open-panel-btn:hover::before { left:100%; }
+        .open-panel-btn:hover { box-shadow:var(--glow); }
+
+        .cp-back-btn {
+            background:transparent; border:none; color:var(--text-dim); cursor:pointer;
+            font-family:'Orbitron'; font-size:9px; letter-spacing:2px; padding:0;
+            transition:color 0.2s;
+        }
+        .cp-back-btn:hover { color:var(--accent); }
+
+        .admin-keys-section { margin-top:16px; }
+        .admin-key-row {
+            display:flex; align-items:center; justify-content:space-between;
+            padding:10px 14px; border-radius:8px; border:1px solid var(--border);
+            background:rgba(var(--accent-rgb),0.03); margin-bottom:8px;
+            font-family:'Share Tech Mono'; font-size:10px;
+        }
+        .admin-key-val { color:var(--accent); letter-spacing:1px; font-size:9px; }
+        .admin-key-lbl { color:#aaa; font-size:8px; margin-top:2px; }
     </style>
 </head>
 <body>
@@ -447,6 +609,7 @@
         <input type="password" id="pass-input" placeholder="● ● ● ● ● ● ●" onkeydown="if(event.key==='Enter')handleLogin()">
     </div>
     <button class="login-btn" onclick="handleLogin()">AUTHENTICATE</button>
+    <button class="open-panel-btn" id="open-panel-btn" onclick="openControlPanel()">OPEN CONTROL PANEL</button>
     <div id="loading-container">
         <div class="prog-bg"><div id="p-bar" class="prog-bar"></div></div>
         <div id="p-text">INITIALIZING PATO ANDROID ENGINE...</div>
@@ -495,8 +658,8 @@
                 </div>
             </div>
             <div class="sidebar-bottom">
-                <button class="inject-btn" onclick="openInject()">
-                    ⚡ INJECT
+                <button class="inject-btn" onclick="openInject()" id="inject-btn-el">
+                    INJECT
                 </button>
             </div>
         </div>
@@ -507,19 +670,19 @@
             <div id="combat" class="content active">
                 <div class="section-hdr">COMBAT MODULE</div>
                 <div class="grid-2">
-                    <div class="opt-item"><input type="checkbox" onchange="notify(this)"> Magnetic Head 99.9%</div>
-                    <div class="opt-item"><input type="checkbox" onchange="notify(this)"> Auto Head-Suck</div>
+                    <div class="opt-item"><input type="checkbox" onchange="notify(this)"> Aim Smoothing</div>
+                    <div class="opt-item"><input type="checkbox" onchange="notify(this)"> Recoil Reducer</div>
                     <div class="opt-item"><input type="checkbox" onchange="notify(this)"> Aim Lock Persistent</div>
                     <div class="opt-item"><input type="checkbox" onchange="notify(this)"> Smooth Aim Pro</div>
                     <div class="opt-item"><input type="checkbox" onchange="notify(this)"> Focus Lock V3</div>
                     <div class="opt-item"><input type="checkbox" onchange="notify(this)"> Snap V4 Ultra</div>
-                    <div class="opt-item"><input type="checkbox" onchange="notify(this)"> Auto Crouch</div>
-                    <div class="opt-item"><input type="checkbox" onchange="notify(this)"> Speed Hack x1.5</div>
+                    <div class="opt-item"><input type="checkbox" onchange="notify(this)"> Scope Stability</div>
+                    <div class="opt-item"><input type="checkbox" onchange="notify(this)"> Hip Fire Accuracy</div>
                 </div>
-                <div class="section-hdr2">INTENSITY</div>
+                <div class="section-hdr2">AIM TUNING</div>
                 <div class="slider-box">
-                    <div class="slider-row"><span>COMBAT POWER</span><span class="val-lbl" id="suck-val">99%</span></div>
-                    <input type="range" min="0" max="100" value="99" oninput="updateVal('suck-val', this.value+'%')">
+                    <div class="slider-row"><span>AIM SMOOTHNESS</span><span class="val-lbl" id="aim-smooth-val">60%</span></div>
+                    <input type="range" min="0" max="100" value="60" oninput="updateVal('aim-smooth-val', this.value+'%')">
                 </div>
                 <div class="slider-box">
                     <div class="slider-row"><span>SNAP SPEED</span><span class="val-lbl" id="snap-val">75%</span></div>
@@ -628,11 +791,11 @@
                 </div>
                 <div class="section-hdr2">SERVER SELECT</div>
                 <select onchange="popClick(); addLog('Server: ' + this.value)">
-                    <option>🌏 ASIA (SG) — Recommended</option>
-                    <option>🌎 GLOBAL (US)</option>
-                    <option>🇹🇭 THAILAND (TH-1)</option>
-                    <option>🇹🇭 THAILAND (TH-2)</option>
-                    <option>🌍 EUROPE (DE)</option>
+                    <option>ASIA (SG) — Recommended</option>
+                    <option>GLOBAL (US)</option>
+                    <option>THAILAND (TH-1)</option>
+                    <option>THAILAND (TH-2)</option>
+                    <option>EUROPE (DE)</option>
                 </select>
                 <div class="slider-box">
                     <div class="slider-row"><span>BANDWIDTH LIMIT</span><span class="val-lbl" id="bw-val">Unlimited</span></div>
@@ -657,11 +820,11 @@
                 <div class="section-hdr2">CUSTOM COLOR</div>
                 <div class="color-pick-row">
                     <label>Accent Color</label>
-                    <input type="color" value="#ff3b30" oninput="setCustomAccent(this.value)">
+                    <input type="color" value="#e30000" oninput="setCustomAccent(this.value)">
                 </div>
                 <div class="color-pick-row">
                     <label>Secondary Color</label>
-                    <input type="color" value="#ff6d00" oninput="setCustomAccent2(this.value)">
+                    <input type="color" value="#8b0000" oninput="setCustomAccent2(this.value)">
                 </div>
 
                 <div class="section-hdr" style="margin-top:10px;">UI OPTIONS</div>
@@ -702,8 +865,8 @@
     <!-- INJECT MODAL (คงเดิม) -->
     <div id="inject-modal">
         <div class="modal-header">
-            <span>⚡ PATO ANDROID INJECTOR</span>
-            <span style="font-size:9px;color:var(--text-dim);cursor:pointer;" onclick="closeInject()">✕ CLOSE</span>
+            <span id="inject-modal-title">PATO ANDROID INJECTOR</span>
+            <span style="font-size:9px;color:var(--text-dim);cursor:pointer;display:flex;align-items:center;gap:4px;" onclick="closeInject()"><span id="ico-modal-close"></span> CLOSE</span>
         </div>
         <div class="modal-content">
 
@@ -718,7 +881,7 @@
             <div id="phase2" class="phase">
                 <div class="section-hdr">SELECT ANDROID DEVICE</div>
                 <div class="device-search">
-                    <input type="text" id="device-search-input" placeholder="🔍 ค้นหารุ่นโทรศัพท์..." oninput="filterDevices()" autocomplete="off">
+                    <input type="text" id="device-search-input" placeholder="ค้นหารุ่นโทรศัพท์..." oninput="filterDevices()" autocomplete="off">
                 </div>
                 <div class="device-select-grid" id="device-grid">
                     <!-- Samsung -->
@@ -873,13 +1036,217 @@
     </div>
 </div>
 
+<!-- CONTROL PANEL -->
+<div id="ctrl-panel" class="glass">
+    <!-- Header -->
+    <div class="win-header">
+        <div class="win-dots">
+            <div class="win-dot" style="background:#ff5f56"></div>
+            <div class="win-dot" style="background:#ffbd2e"></div>
+            <div class="win-dot" style="background:#27c93f"></div>
+        </div>
+        <div class="header-title" id="cp-header-title">PATO CONTROL PANEL</div>
+        <button class="cp-back-btn" onclick="closeControlPanel()" id="cp-back-btn-el"></button>
+    </div>
+
+    <div style="display:flex;flex:1;overflow:hidden;">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-top">
+                <div class="nav-item active" id="cp-nav-keys" onclick="cpOpenTab(event,'cp-keys')">
+                    <div class="nav-dot"></div>KEYS
+                </div>
+                <div class="nav-item" id="cp-nav-admin" onclick="cpOpenTab(event,'cp-admin')">
+                    <div class="nav-dot"></div>ADMIN
+                </div>
+                <div class="nav-item" id="cp-nav-theme" onclick="cpOpenTab(event,'cp-theme')">
+                    <div class="nav-dot"></div>THEME
+                </div>
+            </div>
+            <div class="sidebar-bottom">
+                <button class="inject-btn" id="cp-sidebar-back-btn" onclick="closeControlPanel()">BACK</button>
+            </div>
+        </div>
+
+        <!-- CONTENT AREA -->
+        <div class="cp-content">
+
+            <!-- KEYS TAB -->
+            <div id="cp-keys" class="content active">
+                <div class="section-hdr">KEY STATISTICS</div>
+                <div class="cp-stat-row">
+                    <div class="cp-stat-card">
+                        <div class="cp-stat-num" id="stat-total">0</div>
+                        <div class="cp-stat-lbl">TOTAL KEYS</div>
+                    </div>
+                    <div class="cp-stat-card">
+                        <div class="cp-stat-num" id="stat-active">0</div>
+                        <div class="cp-stat-lbl">ACTIVE</div>
+                    </div>
+                    <div class="cp-stat-card">
+                        <div class="cp-stat-num" id="stat-perm">0</div>
+                        <div class="cp-stat-lbl">PERMANENT</div>
+                    </div>
+                </div>
+
+                <div class="section-hdr2">ACTIONS</div>
+                <div class="cp-grid">
+                    <button class="cp-action-btn" onclick="cpGenerateKey()">
+                        <span class="btn-icon" id="ico-gen"></span>
+                        GENERATE KEY
+                    </button>
+                    <button class="cp-action-btn" onclick="cpCreateKey()">
+                        <span class="btn-icon" id="ico-create"></span>
+                        CREATE KEY
+                    </button>
+                    <button class="cp-action-btn" onclick="cpSetExpiry()">
+                        <span class="btn-icon" id="ico-expiry"></span>
+                        SET EXPIRY
+                    </button>
+                    <button class="cp-action-btn danger" onclick="cpDeleteKey()">
+                        <span class="btn-icon" id="ico-delkey"></span>
+                        DELETE KEY
+                    </button>
+                </div>
+
+                <div class="section-hdr" style="margin-top:4px;">KEY LIST</div>
+                <div class="key-list">
+                    <div class="key-list-header">
+                        <span>KEY</span>
+                        <span>TYPE</span>
+                        <span>EXPIRES</span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <div id="key-list-body">
+                        <!-- keys rendered here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- ADMIN KEYS TAB -->
+            <div id="cp-admin" class="content" style="display:none;">
+                <div class="section-hdr">ADMIN KEY MANAGEMENT</div>
+                <div style="font-size:9px;color:var(--text-dim);font-family:'Share Tech Mono';margin-bottom:16px;line-height:1.8;">
+                    Admin keys เอาไว้เปิด Control Panel<br>
+                    Key ปัจจุบัน: <span style="color:var(--accent)" id="cur-admin-key-display">PATO-X-PANEL</span>
+                </div>
+                <div class="cp-grid">
+                    <button class="cp-action-btn" onclick="cpAddAdminKey()">
+                        <span class="btn-icon" id="ico-addadmin"></span>
+                        ADD ADMIN KEY
+                    </button>
+                    <button class="cp-action-btn danger" onclick="cpDeleteAdminKey()">
+                        <span class="btn-icon" id="ico-deladmin"></span>
+                        DELETE ADMIN KEY
+                    </button>
+                </div>
+                <div class="section-hdr2">ADMIN KEYS</div>
+                <div id="admin-key-list"></div>
+            </div>
+
+            <!-- THEME TAB (same as main panel) -->
+            <div id="cp-theme" class="content" style="display:none;">
+                <div class="section-hdr">THEME PRESETS</div>
+                <div class="theme-grid">
+                    <div class="theme-chip" style="background:linear-gradient(135deg,rgba(0,229,255,0.3),rgba(124,77,255,0.3));color:#00e5ff;" onclick="applyTheme('cyan')" id="cp-theme-cyan">CYAN</div>
+                    <div class="theme-chip" style="background:linear-gradient(135deg,rgba(255,59,48,0.3),rgba(255,109,0,0.3));color:#ff3b30;" onclick="applyTheme('red')" id="cp-theme-red">RED</div>
+                    <div class="theme-chip" style="background:linear-gradient(135deg,rgba(52,199,89,0.3),rgba(0,229,255,0.3));color:#34c759;" onclick="applyTheme('green')" id="cp-theme-green">GREEN</div>
+                    <div class="theme-chip" style="background:linear-gradient(135deg,rgba(255,214,10,0.3),rgba(255,109,0,0.3));color:#ffd60a;" onclick="applyTheme('gold')" id="cp-theme-gold">GOLD</div>
+                    <div class="theme-chip" style="background:linear-gradient(135deg,rgba(255,45,85,0.3),rgba(175,82,222,0.3));color:#ff2d55;" onclick="applyTheme('pink')" id="cp-theme-pink">PINK</div>
+                    <div class="theme-chip" style="background:linear-gradient(135deg,rgba(175,82,222,0.3),rgba(90,200,250,0.3));color:#af52de;" onclick="applyTheme('purple')" id="cp-theme-purple">PURPLE</div>
+                    <div class="theme-chip" style="background:linear-gradient(135deg,rgba(255,255,255,0.2),rgba(200,200,200,0.1));color:#fff;" onclick="applyTheme('white')" id="cp-theme-white">WHITE</div>
+                    <div class="theme-chip" style="background:linear-gradient(135deg,rgba(255,149,0,0.3),rgba(255,214,10,0.2));color:#ff9500;" onclick="applyTheme('orange')" id="cp-theme-orange">ORANGE</div>
+                </div>
+                <div class="section-hdr2">CUSTOM COLOR</div>
+                <div class="color-pick-row">
+                    <label>Accent Color</label>
+                    <input type="color" value="#e30000" oninput="setCustomAccent(this.value)">
+                </div>
+                <div class="color-pick-row">
+                    <label>Secondary Color</label>
+                    <input type="color" value="#8b0000" oninput="setCustomAccent2(this.value)">
+                </div>
+                <div class="section-hdr" style="margin-top:10px;">UI OPTIONS</div>
+                <div class="toggle-row">
+                    <span>Particles Effect</span>
+                    <label class="toggle-switch"><input type="checkbox" checked onchange="toggleParticles(this)"><div class="toggle-track"></div></label>
+                </div>
+                <div class="toggle-row">
+                    <span>Scanline Overlay</span>
+                    <label class="toggle-switch"><input type="checkbox" checked onchange="toggleScanline(this)"><div class="toggle-track"></div></label>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONSOLE LOG (right) -->
+        <div class="console-panel" id="cp-console-logs">
+            <div style="font-family:'Orbitron';font-size:8px;color:var(--accent);margin-bottom:5px;text-align:center;">CTRL LOG</div>
+            <div id="cp-log-text">[ CTRL ] Ready...</div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer-bar">
+        <span>MODE: <b style="color:var(--accent)">ADMIN</b></span>
+        <span>KEYS: <b id="footer-key-count">0</b></span>
+        <span>SERVER: <b>ASIA-SG</b></span>
+        <span>STATUS: <b style="color:#34c759">● ONLINE</b></span>
+    </div>
+</div>
+
+<!-- CP MODAL -->
+<div id="cp-modal">
+    <div class="cp-modal-box" id="cp-modal-box">
+        <!-- content injected by JS -->
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
+    // ===== SVG ICONS =====
+    const SVG = {
+        zap:    `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+        plus:   `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`,
+        clock:  `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+        trash:  `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>`,
+        copy:   `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`,
+        check:  `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+        gear:   `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
+        back:   `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>`,
+        close:  `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,
+        lock:   `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
+        key:    `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>`,
+        shield: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+        user:   `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+        search: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`,
+    };
+
+    // ===== LOCALSTORAGE PERSISTENCE =====
+    const LS_KEYS = 'pato_user_keys';
+    const LS_ADMIN = 'pato_admin_keys';
+
+    function saveToLS() {
+        try {
+            localStorage.setItem(LS_KEYS, JSON.stringify(userKeys));
+            localStorage.setItem(LS_ADMIN, JSON.stringify(adminKeys));
+        } catch(e) {}
+    }
+
+    function loadFromLS() {
+        try {
+            const k = localStorage.getItem(LS_KEYS);
+            const a = localStorage.getItem(LS_ADMIN);
+            if (k) userKeys = JSON.parse(k);
+            if (a) adminKeys = JSON.parse(a);
+        } catch(e) {}
+    }
+
     let isMemoryActive = false;
     let soundEnabled = true;
     let selectedDevice = '';
     let particlesInitialized = false;
-    let currentParticlesColor = "#ff3b30";
+    let currentParticlesColor = "#e30000";
     const popSound = new Audio("data:audio/wav;base64,UklGRj4AAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YRIDAAAAZv9m/2b/Zv9m/2b/Zv8=");
     popSound.volume = 0.3;
 
@@ -955,15 +1322,384 @@
         const label = checkbox.closest('.opt-item').innerText.trim();
         addLog(`${label} → ${state}`);
         const t = document.getElementById('toast');
-        t.innerText = checkbox.checked ? "✓ ACTIVATED" : "✕ DISABLED";
+        t.innerText = checkbox.checked ? "ACTIVATED" : "DISABLED";
         t.className = checkbox.checked ? "toast-on" : "toast-off";
         setTimeout(() => t.className = "", 2000);
     }
 
+    // ===== KEY DATABASE (localStorage-backed) =====
+    let userKeys = [
+        { key: "pato", type: "PERMANENT", expires: "∞", created: "2025-01-01" },
+        { key: "pato123", type: "PERMANENT", expires: "∞", created: "2025-01-01" }
+    ];
+    let adminKeys = ["PATO-X-PANEL"];
+    let isAdmin = false;
+    loadFromLS();
+
+    function generateKeyString() {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        const seg = () => Array.from({length:4}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
+        return `PATO-${seg()}-${seg()}-${seg()}`;
+    }
+
+    function getKeyExpiry(days) {
+        if (days === 0) return "∞";
+        const d = new Date();
+        d.setDate(d.getDate() + days);
+        return d.toISOString().split('T')[0];
+    }
+
+    function renderKeyList() {
+        const body = document.getElementById('key-list-body');
+        if (!body) return;
+        body.innerHTML = '';
+        userKeys.forEach((k, i) => {
+            const row = document.createElement('div');
+            row.className = 'key-row';
+            const isExpired = k.expires !== '∞' && new Date(k.expires) < new Date();
+            row.innerHTML = `
+                <span class="key-val">${k.key}</span>
+                <span class="key-type">${k.type}</span>
+                <span class="key-expire" style="${isExpired?'color:#ff453a':''}">${k.expires}</span>
+                <button class="key-copy-btn" title="Copy key" onclick="copyKey(this,'${k.key}')">${SVG.copy}</button>
+                <button class="key-del-btn" title="Delete key" onclick="quickDeleteKey(${i})">${SVG.trash}</button>
+            `;
+            body.appendChild(row);
+        });
+        updateStats();
+    }
+
+    function updateStats() {
+        const total = userKeys.length;
+        const perm = userKeys.filter(k => k.expires === '∞').length;
+        const active = userKeys.filter(k => k.expires === '∞' || new Date(k.expires) >= new Date()).length;
+        document.getElementById('stat-total').innerText = total;
+        document.getElementById('stat-active').innerText = active;
+        document.getElementById('stat-perm').innerText = perm;
+        document.getElementById('footer-key-count').innerText = total;
+    }
+
+    function renderAdminKeys() {
+        const el = document.getElementById('admin-key-list');
+        if (!el) return;
+        el.innerHTML = '';
+        adminKeys.forEach((k, i) => {
+            const row = document.createElement('div');
+            row.className = 'admin-key-row';
+            row.innerHTML = `
+                <div>
+                    <div class="admin-key-val">${k}</div>
+                    <div class="admin-key-lbl">Admin Control Panel Key</div>
+                </div>
+                <div style="display:flex;gap:6px;align-items:center;">
+                    <button class="admin-copy-btn" title="Copy key" onclick="copyKey(this,'${k}')">${SVG.copy}</button>
+                    ${adminKeys.length > 1
+                        ? `<button class="key-del-btn" title="Delete" onclick="removeAdminKey(${i})">${SVG.trash}</button>`
+                        : `<span style="font-size:8px;color:var(--text-dim);font-family:'Orbitron'">MASTER</span>`}
+                </div>
+            `;
+            el.appendChild(row);
+        });
+        document.getElementById('cur-admin-key-display').innerText = adminKeys[0];
+    }
+
+    function copyKey(btn, keyVal) {
+        popClick();
+        navigator.clipboard.writeText(keyVal).then(() => {
+            btn.innerHTML = SVG.check;
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.innerHTML = SVG.copy;
+                btn.classList.remove('copied');
+            }, 1800);
+        }).catch(() => {
+            // fallback
+            const ta = document.createElement('textarea');
+            ta.value = keyVal;
+            ta.style.position = 'fixed'; ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select(); document.execCommand('copy');
+            document.body.removeChild(ta);
+            btn.innerHTML = SVG.check;
+            btn.classList.add('copied');
+            setTimeout(() => { btn.innerHTML = SVG.copy; btn.classList.remove('copied'); }, 1800);
+        });
+        showToast("COPIED!", true);
+    }
+
+    function quickDeleteKey(i) {
+        popClick();
+        const k = userKeys[i];
+        if (confirm(`ลบ key "${k.key}" ?`)) {
+            userKeys.splice(i, 1);
+            saveToLS();
+            renderKeyList();
+            cpLog("Key deleted: " + k.key);
+            showToast("KEY DELETED", false);
+        }
+    }
+
+    function removeAdminKey(i) {
+        popClick();
+        if (confirm(`ลบ admin key "${adminKeys[i]}" ?`)) {
+            adminKeys.splice(i, 1);
+            saveToLS();
+            renderAdminKeys();
+            cpLog("Admin key removed");
+        }
+    }
+
+    function cpLog(msg) {
+        const logDiv = document.getElementById('cp-log-text');
+        if (!logDiv) return;
+        logDiv.innerHTML += `<br><span style="color:var(--text-dim)">[${getTime()}]</span> ${msg}`;
+        const con = document.getElementById('cp-console-logs');
+        if (con) con.scrollTop = con.scrollHeight;
+    }
+
+    function showToast(msg, isOn = true) {
+        const t = document.getElementById('toast');
+        t.innerText = msg;
+        t.className = isOn ? "toast-on" : "toast-off";
+        setTimeout(() => t.className = "", 2000);
+    }
+
+    // ===== CONTROL PANEL MODALS =====
+    function showCpModal(html, onOk) {
+        const box = document.getElementById('cp-modal-box');
+        box.innerHTML = html;
+        document.getElementById('cp-modal').classList.add('show');
+        if (onOk) {
+            const okBtn = box.querySelector('.cp-modal-ok');
+            if (okBtn) okBtn.onclick = () => { onOk(); closeCpModal(); };
+        }
+    }
+
+    function closeCpModal() {
+        document.getElementById('cp-modal').classList.remove('show');
+    }
+
+    function cpGenerateKey() {
+        popClick();
+        const newKey = generateKeyString();
+        showCpModal(`
+            <div class="cp-modal-title">${SVG.zap} GENERATE KEY</div>
+            <div class="cp-label">KEY ที่สร้าง:</div>
+            <div class="cp-generated-key" id="gen-key-val">${newKey}</div>
+            <div class="cp-label">ระยะเวลา:</div>
+            <select class="cp-select" id="gen-days">
+                <option value="0">PERMANENT</option>
+                ${[1,3,7,14,30,60,90].map(d=>`<option value="${d}">${d} วัน</option>`).join('')}
+            </select>
+            <div class="cp-modal-btns">
+                <button class="cp-modal-ok">ADD KEY</button>
+                <button class="cp-modal-cancel" onclick="closeCpModal()">CANCEL</button>
+            </div>
+        `, () => {
+            const days = parseInt(document.getElementById('gen-days').value);
+            const keyVal = document.getElementById('gen-key-val').innerText;
+            userKeys.push({ key: keyVal, type: days === 0 ? 'PERMANENT' : `${days}D`, expires: getKeyExpiry(days), created: new Date().toISOString().split('T')[0] });
+            renderKeyList();
+            saveToLS();
+            cpLog("Generated: " + keyVal);
+            showToast("KEY GENERATED", true);
+        });
+    }
+
+    function cpCreateKey() {
+        popClick();
+        showCpModal(`
+            <div class="cp-modal-title">${SVG.plus} CREATE KEY</div>
+            <div class="cp-label">กรอก Key ที่ต้องการ:</div>
+            <input class="cp-input" id="new-key-input" placeholder="PATO-XXXX-XXXX-XXXX" autocomplete="off">
+            <div class="cp-label">ระยะเวลา:</div>
+            <select class="cp-select" id="create-days">
+                <option value="0">PERMANENT</option>
+                ${Array.from({length:90},(_,i)=>i+1).map(d=>`<option value="${d}">${d} วัน</option>`).join('')}
+            </select>
+            <div class="cp-modal-btns">
+                <button class="cp-modal-ok">CREATE</button>
+                <button class="cp-modal-cancel" onclick="closeCpModal()">CANCEL</button>
+            </div>
+        `, () => {
+            const val = document.getElementById('new-key-input').value.trim();
+            if (!val) { showToast("กรอก KEY ด้วย", false); return; }
+            if (userKeys.find(k => k.key === val)) { showToast("KEY ซ้ำ", false); return; }
+            const days = parseInt(document.getElementById('create-days').value);
+            userKeys.push({ key: val, type: days === 0 ? 'PERMANENT' : `${days}D`, expires: getKeyExpiry(days), created: new Date().toISOString().split('T')[0] });
+            renderKeyList();
+            saveToLS();
+            cpLog("Created key: " + val);
+            showToast("KEY CREATED", true);
+        });
+    }
+
+    function cpSetExpiry() {
+        popClick();
+        const keyOpts = userKeys.map((k,i) => `<option value="${i}">${k.key}</option>`).join('');
+        showCpModal(`
+            <div class="cp-modal-title">${SVG.clock} SET EXPIRY</div>
+            <div class="cp-label">เลือก Key:</div>
+            <select class="cp-select" id="expiry-key-sel">${keyOpts || '<option>ไม่มี key</option>'}</select>
+            <div class="cp-label">ระยะเวลาใหม่:</div>
+            <select class="cp-select" id="expiry-days">
+                <option value="0">PERMANENT</option>
+                ${Array.from({length:90},(_,i)=>i+1).map(d=>`<option value="${d}">${d} วัน</option>`).join('')}
+            </select>
+            <div class="cp-modal-btns">
+                <button class="cp-modal-ok">SET</button>
+                <button class="cp-modal-cancel" onclick="closeCpModal()">CANCEL</button>
+            </div>
+        `, () => {
+            if (!userKeys.length) return;
+            const idx = parseInt(document.getElementById('expiry-key-sel').value);
+            const days = parseInt(document.getElementById('expiry-days').value);
+            userKeys[idx].expires = getKeyExpiry(days);
+            userKeys[idx].type = days === 0 ? 'PERMANENT' : `${days}D`;
+            renderKeyList();
+            saveToLS();
+            cpLog("Expiry set: " + userKeys[idx].key);
+            showToast("EXPIRY UPDATED", true);
+        });
+    }
+
+    function cpDeleteKey() {
+        popClick();
+        const keyOpts = userKeys.map((k,i) => `<option value="${i}">${k.key} (${k.expires})</option>`).join('');
+        showCpModal(`
+            <div class="cp-modal-title" style="color:#ff453a;">${SVG.trash} DELETE KEY</div>
+            <div class="cp-label">เลือก Key ที่ต้องการลบ:</div>
+            <select class="cp-select" id="del-key-sel">${keyOpts || '<option>ไม่มี key</option>'}</select>
+            <div class="cp-modal-btns">
+                <button class="cp-modal-ok" style="color:#ff453a;border-color:#ff453a;background:rgba(255,69,58,0.1);">${SVG.trash} DELETE</button>
+                <button class="cp-modal-cancel" onclick="closeCpModal()">CANCEL</button>
+            </div>
+        `, () => {
+            if (!userKeys.length) return;
+            const idx = parseInt(document.getElementById('del-key-sel').value);
+            const k = userKeys[idx].key;
+            userKeys.splice(idx, 1);
+            renderKeyList();
+            saveToLS();
+            cpLog("Deleted: " + k);
+            showToast("KEY DELETED", false);
+        });
+    }
+
+    function cpAddAdminKey() {
+        popClick();
+        showCpModal(`
+            <div class="cp-modal-title">${SVG.shield} ADD ADMIN KEY</div>
+            <div class="cp-label">Admin Key ใหม่สำหรับเปิด Control Panel:</div>
+            <input class="cp-input" id="new-admin-key" placeholder="PATO-X-XXXX" autocomplete="off">
+            <div class="cp-modal-btns">
+                <button class="cp-modal-ok">ADD</button>
+                <button class="cp-modal-cancel" onclick="closeCpModal()">CANCEL</button>
+            </div>
+        `, () => {
+            const val = document.getElementById('new-admin-key').value.trim();
+            if (!val) { showToast("กรอก key ด้วย", false); return; }
+            if (adminKeys.includes(val)) { showToast("KEY ซ้ำ", false); return; }
+            adminKeys.push(val);
+            renderAdminKeys();
+            saveToLS();
+            cpLog("Admin key added: " + val);
+            showToast("ADMIN KEY ADDED", true);
+        });
+    }
+
+    function cpDeleteAdminKey() {
+        popClick();
+        if (adminKeys.length <= 1) { showToast("ต้องมี admin key อย่างน้อย 1 อัน", false); return; }
+        const opts = adminKeys.map((k,i) => `<option value="${i}">${k}</option>`).join('');
+        showCpModal(`
+            <div class="cp-modal-title" style="color:#ff453a;">${SVG.trash} DELETE ADMIN KEY</div>
+            <div class="cp-label">เลือก Admin Key ที่ต้องการลบ:</div>
+            <select class="cp-select" id="del-admin-sel">${opts}</select>
+            <div class="cp-modal-btns">
+                <button class="cp-modal-ok" style="color:#ff453a;border-color:#ff453a;background:rgba(255,69,58,0.1);">${SVG.trash} DELETE</button>
+                <button class="cp-modal-cancel" onclick="closeCpModal()">CANCEL</button>
+            </div>
+        `, () => {
+            const idx = parseInt(document.getElementById('del-admin-sel').value);
+            const k = adminKeys[idx];
+            adminKeys.splice(idx, 1);
+            renderAdminKeys();
+            saveToLS();
+            cpLog("Admin key removed: " + k);
+            showToast("ADMIN KEY REMOVED", false);
+        });
+    }
+
+    function cpOpenTab(e, tabId) {
+        popClick();
+        document.querySelectorAll('#ctrl-panel .content').forEach(c => { c.style.display='none'; c.classList.remove('active'); });
+        document.querySelectorAll('#ctrl-panel .nav-item').forEach(n => n.classList.remove('active'));
+        const el = document.getElementById(tabId);
+        if (el) { el.style.display='block'; el.classList.add('active'); }
+        if (e) e.currentTarget.classList.add('active');
+        if (tabId === 'cp-admin') renderAdminKeys();
+        if (tabId === 'cp-keys') renderKeyList();
+    }
+
+    function openControlPanel() {
+        popClick();
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('ctrl-panel').style.display = 'flex';
+        renderKeyList();
+        renderAdminKeys();
+        cpLog("Control Panel opened");
+        addLog("Admin → Control Panel");
+    }
+
+    function closeControlPanel() {
+        popClick();
+        document.getElementById('ctrl-panel').style.display = 'none';
+        document.getElementById('main-panel').style.display = 'flex';
+        addLog("Control Panel closed");
+    }
+
     function handleLogin() {
         const val = document.getElementById('pass-input').value;
-        if(val === "pato" || val === "pato123") {
+
+        // Check admin keys first
+        if (adminKeys.includes(val)) {
             popClick();
+            isAdmin = true;
+            document.getElementById('loading-container').style.display = 'block';
+            let p = 0;
+            const msgs = ["VERIFYING ADMIN CREDENTIALS","LOADING CONTROL MODULE","CONNECTING ADMIN SERVER","AUTHENTICATING HWID","ADMIN ACCESS GRANTED"];
+            const inv = setInterval(() => {
+                p += Math.floor(Math.random()*14)+4;
+                if(p >= 100) {
+                    p = 100; clearInterval(inv);
+                    document.getElementById('p-text').innerText = "CONTROL PANEL ACCESS GRANTED";
+                    setTimeout(() => {
+                        document.getElementById('loading-container').style.display = 'none';
+                        document.getElementById('open-panel-btn').style.display = 'block';
+                        document.getElementById('pass-input').value = '';
+                        showToast("ADMIN AUTHENTICATED", true);
+                        addLog("Admin key accepted");
+                    }, 600);
+                } else {
+                    const idx = Math.min(Math.floor(p/25), msgs.length-1);
+                    document.getElementById('p-text').innerText = msgs[idx] + "... " + p + "%";
+                }
+                document.getElementById('p-bar').style.width = p + '%';
+            }, 70);
+            return;
+        }
+
+        // Check user keys
+        const foundKey = userKeys.find(k => {
+            if (k.key !== val) return false;
+            if (k.expires === '∞') return true;
+            return new Date(k.expires) >= new Date();
+        });
+
+        if(foundKey) {
+            popClick();
+            isAdmin = false;
             document.getElementById('loading-container').style.display = 'block';
             let p = 0;
             const msgs = ["INITIALIZING ANDROID ENGINE","LOADING COMBAT MODULE","LOADING SENSITIVE CFG","LOADING MEMORY BOOST","CONNECTING GLOBAL SERVER","AUTHENTICATING HWID","READY"];
@@ -971,15 +1707,15 @@
                 p += Math.floor(Math.random()*12)+3;
                 if(p >= 100) {
                     p = 100; clearInterval(inv);
-                    document.getElementById('p-text').innerText = "ANDROID ENGINE READY ✓";
+                    document.getElementById('p-text').innerText = "ANDROID ENGINE READY";
                     setTimeout(() => {
                         document.getElementById('login-screen').style.display = 'none';
                         document.getElementById('main-panel').style.display = 'flex';
                         addLog("Authenticated → PATO ANDROID PANEL");
-                        addLog("HWID Verified ✓");
-                        addLog("Server Connected ✓");
+                        addLog("HWID Verified");
+                        addLog("Server Connected");
                         refreshThemeColors();
-                        initParticles('#ff3b30');
+                        initParticles(getComputedStyle(document.documentElement).getPropertyValue('--accent').trim());
                     }, 600);
                 } else {
                     const idx = Math.min(Math.floor(p/15), msgs.length-1);
@@ -988,8 +1724,10 @@
                 document.getElementById('p-bar').style.width = p + '%';
             }, 70);
         } else {
+            // Check if key exists but expired
+            const expired = userKeys.find(k => k.key === val && k.expires !== '∞' && new Date(k.expires) < new Date());
             const t = document.getElementById('toast');
-            t.innerText = "✕ ACCESS DENIED";
+            t.innerText = expired ? "KEY EXPIRED" : "ACCESS DENIED";
             t.className = "toast-off";
             setTimeout(() => t.className = "", 2000);
         }
@@ -1040,7 +1778,7 @@
         {t:'green', m:'[OK] HWID spoofing active'},
         {t:'green', m:'[OK] SSL certificate bypassed'},
         {t:'yellow', m:'[READY] All modules loaded successfully!'},
-        {t:'green', m:'[PATO] ✓ Inject complete → select device'},
+        {t:'green', m:'[PATO] Inject complete → select device'},
     ];
 
     function openInject() {
@@ -1076,7 +1814,7 @@
         const typeNext = () => {
             if(i >= cppLines.length) {
                 document.getElementById('phase1-next').style.display='block';
-                addLog("Inject engine compiled ✓");
+                addLog("Inject engine compiled");
                 return;
             }
             const line = cppLines[i++];
@@ -1124,7 +1862,7 @@
         popClick();
         addLog("Launching: " + g + " on " + selectedDevice);
         const t = document.getElementById('toast');
-        t.innerText = "⚡ LAUNCHING " + (g.includes('MAX')?'FF MAX':'FREE FIRE');
+        t.innerText = "LAUNCHING " + (g.includes('MAX')?'FF MAX':'FREE FIRE');
         t.className = "toast-on";
         setTimeout(() => {
             t.className = "";
@@ -1135,7 +1873,7 @@
     // ===== THEME =====
     const themes = {
         cyan:   { accent:'#00e5ff', accent2:'#7c4dff' },
-        red:    { accent:'#ff3b30', accent2:'#ff6d00' },
+        red:    { accent:'#e30000', accent2:'#8b0000' },
         green:  { accent:'#34c759', accent2:'#00e5ff' },
         gold:   { accent:'#ffd60a', accent2:'#ff9500' },
         pink:   { accent:'#ff2d55', accent2:'#af52de' },
@@ -1159,7 +1897,7 @@
         document.getElementById('theme-'+name).classList.add('selected');
         addLog("Theme: " + name.toUpperCase());
         const t = document.getElementById('toast');
-        t.innerText = "✓ THEME: " + name.toUpperCase();
+        t.innerText = "THEME: " + name.toUpperCase();
         t.className = "toast-on";
         setTimeout(() => t.className="", 2000);
     }
@@ -1220,13 +1958,57 @@
         document.getElementById('ping-val').innerText = (Math.random()*8+18).toFixed(0) + "ms";
     }, 700);
 
+    function injectSVGIcons() {
+        // CP action button icons
+        const icoMap = {
+            'ico-gen':      SVG.zap,
+            'ico-create':   SVG.plus,
+            'ico-expiry':   SVG.clock,
+            'ico-delkey':   SVG.trash,
+            'ico-addadmin': SVG.plus,
+            'ico-deladmin': SVG.trash,
+            'ico-modal-close': SVG.close,
+        };
+        Object.entries(icoMap).forEach(([id, svg]) => {
+            const el = document.getElementById(id);
+            if (el) el.innerHTML = svg;
+        });
+
+        // Inject button in main sidebar
+        const injectBtn = document.getElementById('inject-btn-el');
+        if (injectBtn) injectBtn.innerHTML = `<span style="display:flex;align-items:center;gap:6px;justify-content:center;">${SVG.zap} INJECT</span>`;
+
+        // Open panel button
+        const openBtn = document.getElementById('open-panel-btn');
+        if (openBtn) openBtn.innerHTML = `<span style="display:flex;align-items:center;gap:6px;justify-content:center;">${SVG.gear} OPEN CONTROL PANEL</span>`;
+
+        // CP back button (top right)
+        const cpBack = document.getElementById('cp-back-btn-el');
+        if (cpBack) cpBack.innerHTML = `<span style="display:flex;align-items:center;gap:5px;">${SVG.close} BACK</span>`;
+
+        // CP sidebar back button
+        const cpSideBack = document.getElementById('cp-sidebar-back-btn');
+        if (cpSideBack) cpSideBack.innerHTML = `<span style="display:flex;align-items:center;gap:5px;justify-content:center;">${SVG.back} BACK</span>`;
+
+        // CP header title
+        const cpTitle = document.getElementById('cp-header-title');
+        if (cpTitle) cpTitle.innerHTML = `<span style="display:flex;align-items:center;gap:6px;">${SVG.gear} PATO CONTROL PANEL</span>`;
+
+        // Inject modal title
+        const injectTitle = document.getElementById('inject-modal-title');
+        if (injectTitle) injectTitle.innerHTML = `<span style="display:flex;align-items:center;gap:6px;">${SVG.zap} PATO ANDROID INJECTOR</span>`;
+
+        // Device search placeholder SVG is text-only, no change needed
+    }
+
     window.onload = function() {
         document.querySelectorAll('.theme-chip').forEach(c=>c.classList.remove('selected'));
         document.getElementById('theme-red').classList.add('selected');
-        document.querySelector('#setting .color-pick-row:first-child input').value = '#ff3b30';
-        document.querySelector('#setting .color-pick-row:last-child input').value = '#ff6d00';
-        initParticles('#ff3b30');
+        document.querySelector('#setting .color-pick-row:first-child input').value = '#e30000';
+        document.querySelector('#setting .color-pick-row:last-child input').value = '#8b0000';
+        initParticles('#e30000');
+        injectSVGIcons();
     };
 </script>
 </body>
-</html>
+    </html>
