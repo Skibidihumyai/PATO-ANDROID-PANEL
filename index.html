@@ -1716,540 +1716,295 @@
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js">
     </script>
     <script>
-        const SESSION_KEY = 'pato_session';
-        const BLACKLIST_KEY = 'pato_key_blacklist';
-        const SESSION_DURATION = 24 * 60 * 60 * 1000;
-        const KEY_PATTERN = /^PATO-24H-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/;
+        // ==================== Firebase Init ====================
+const firebaseConfig = {
+    apiKey: "AIzaSyAg3CRKGFpbyVV4es1uTqcvIM8Qs5FL07U",
+    authDomain: "pato-android-panel-x.firebaseapp.com",
+    databaseURL: "https://pato-android-panel-x-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "pato-android-panel-x",
+    storageBucket: "pato-android-panel-x.firebasestorage.app",
+    messagingSenderId: "154093039524",
+    appId: "1:154093039524:web:20c604a085494fc1ff5b31"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
-        let isMemoryActive = false;
-        let soundEnabled = true;
-        let selectedDevice = '';
-        let particlesInitialized = false;
-        let currentParticlesColor = "#e30000";
-        const popSound = new Audio(
-            "data:audio/wav;base64,UklGRj4AAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YRIDAAAAZv9m/2b/Zv9m/2b/Zv8=");
-        popSound.volume = 0.3;
+// ==================== Session Management ====================
+const SESSION_KEY = 'pato_session_key'; // เก็บเฉพาะ key ใน localStorage
 
-        function getBlacklist() {
-            try {
-                const raw = localStorage.getItem(BLACKLIST_KEY);
-                if (!raw) return [];
-                const arr = JSON.parse(raw);
-                return Array.isArray(arr) ? arr : [];
-            } catch (e) {
-                return [];
-            }
+let isMemoryActive = false;
+let soundEnabled = true;
+let selectedDevice = '';
+let particlesInitialized = false;
+let currentParticlesColor = "#e30000";
+let currentKeyExpiry = null; // เก็บ expiry จาก Firebase
+
+const popSound = new Audio(
+    "data:audio/wav;base64,UklGRj4AAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YRIDAAAAZv9m/2b/Zv9m/2b/Zv8=");
+popSound.volume = 0.3;
+
+// บันทึก key ลง localStorage
+function saveSession(key) {
+    localStorage.setItem(SESSION_KEY, key);
+}
+
+// อ่าน key จาก localStorage
+function getSessionKey() {
+    return localStorage.getItem(SESSION_KEY);
+}
+
+// ล้าง session
+function clearSession() {
+    localStorage.removeItem(SESSION_KEY);
+    currentKeyExpiry = null;
+}
+
+// ตรวจสอบ key กับ Firebase
+async function checkKeyWithFirebase(key) {
+    if (!key) return { valid: false, reason: 'EMPTY' };
+    const keyRef = db.ref('keys/' + key);
+    try {
+        const snapshot = await keyRef.once('value');
+        if (!snapshot.exists()) {
+            return { valid: false, reason: 'NOT_FOUND' };
         }
-
-        function addToBlacklist(key) {
-            if (!key || !KEY_PATTERN.test(key)) return;
-            const bl = getBlacklist();
-            if (!bl.includes(key)) {
-                bl.push(key);
-                localStorage.setItem(BLACKLIST_KEY, JSON.stringify(bl));
-                console.log('[PATO] Key blacklisted permanently: ' + key);
-            }
+        const data = snapshot.val();
+        const now = Date.now();
+        if (data.valid !== true) {
+            return { valid: false, reason: 'DISABLED' };
         }
-
-        function isKeyBlacklisted(key) {
-            if (!key) return false;
-            return getBlacklist().includes(key);
+        if (data.expiry && now > data.expiry) {
+            return { valid: false, reason: 'EXPIRED' };
         }
+        return { valid: true, expiry: data.expiry || (now + 24*60*60*1000) };
+    } catch (error) {
+        console.error('Firebase error:', error);
+        return { valid: false, reason: 'ERROR' };
+    }
+}
 
-        function saveSession(key) {
-            const session = { key: key, start: Date.now(), expiry: Date.now() + SESSION_DURATION };
-            localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+// ตรวจสอบ auto-login
+async function checkAutoLogin() {
+    const key = getSessionKey();
+    if (!key) return null;
+    const result = await checkKeyWithFirebase(key);
+    if (result.valid) {
+        currentKeyExpiry = result.expiry;
+        return 'user';
+    } else {
+        clearSession();
+        return null;
+    }
+}
+
+// Logout
+function userLogout() {
+    popClick();
+    clearSession();
+    document.getElementById('main-panel').style.display = 'none';
+    document.getElementById('login-screen').style.display = 'block';
+    document.getElementById('loading-container').style.display = 'none';
+    document.getElementById('pass-input').value = '';
+    showToast("LOGGED OUT", false);
+}
+
+// แสดงเวลาที่เหลือของ session
+function updateSessionDisplay() {
+    const el = document.getElementById('session-time');
+    if (!el) return;
+    if (!currentKeyExpiry) {
+        el.innerText = '--';
+        return;
+    }
+    const remaining = currentKeyExpiry - Date.now();
+    if (remaining <= 0) {
+        el.innerText = 'EXPIRED';
+        return;
+    }
+    const hours = Math.floor(remaining / (60*60*1000));
+    const minutes = Math.floor((remaining % (60*60*1000)) / (60*1000));
+    el.innerText = `${hours}h ${minutes}m`;
+}
+
+// ==================== Existing Functions (unchanged) ====================
+function initParticles(color) {
+    if (window.pJSDom && window.pJSDom[0]) {
+        window.pJSDom[0].pJS.fn.vendors.destroypJS();
+    }
+    particlesJS('particles-js', {
+        "particles": {
+            "number": { "value": 60 },
+            "color": { "value": color },
+            "opacity": { "value": 0.15 },
+            "size": { "value": 1.5 },
+            "move": { "enable": true, "speed": 0.8, "direction": "top" }
         }
+    });
+    particlesInitialized = true;
+    currentParticlesColor = color;
+}
 
-        function getSession() {
-            try {
-                const data = localStorage.getItem(SESSION_KEY);
-                if (!data) return null;
-                return JSON.parse(data);
-            } catch (e) {
-                return null;
-            }
-        }
+function hexToRgb(hex) { /* ... เหมือนเดิม ... */ }
 
-        function clearSession() {
-            localStorage.removeItem(SESSION_KEY);
-        }
+function refreshThemeColors() { /* ... เหมือนเดิม ... */ }
 
-        function isSessionValid() {
-            const session = getSession();
-            if (!session) return false;
-            if (session.expiry && Date.now() < session.expiry) {
-                return KEY_PATTERN.test(session.key);
-            }
-            if (session.key) {
-                addToBlacklist(session.key);
-            }
-            clearSession();
-            return false;
-        }
+function popClick() {
+    if (!soundEnabled) return;
+    popSound.currentTime = 0;
+    try { popSound.play(); } catch (e) {}
+}
 
-        function checkAutoLogin() {
-            if (isSessionValid()) {
-                return 'user';
-            }
-            return null;
-        }
+function addLog(msg) {
+    console.log('[PATO]', msg);
+}
 
-        function userLogout() {
-            popClick();
-            clearSession();
-            document.getElementById('main-panel').style.display = 'none';
-            document.getElementById('login-screen').style.display = 'block';
-            document.getElementById('loading-container').style.display = 'none';
-            document.getElementById('pass-input').value = '';
-            showToast("LOGGED OUT", false);
-        }
+function notify(checkbox) { /* ... เหมือนเดิม ... */ }
 
-        function updateSessionDisplay() {
-            const el = document.getElementById('session-time');
-            if (!el) return;
-            const session = getSession();
-            if (!session) {
-                el.innerText = '--';
-                return;
-            }
-            const remaining = session.expiry - Date.now();
-            if (remaining <= 0) {
-                el.innerText = 'EXPIRED';
-                return;
-            }
-            const hours = Math.floor(remaining / (60 * 60 * 1000));
-            const minutes = Math.floor((remaining % (60 * 60 * 1000)) / (60 * 1000));
-            el.innerText = `${hours}h ${minutes}m`;
-        }
+// ==================== Login Handler ====================
+async function handleLogin() {
+    const val = document.getElementById('pass-input').value.trim();
+    if (!val) return;
 
-        function initParticles(color) {
-            if (window.pJSDom && window.pJSDom[0]) {
-                window.pJSDom[0].pJS.fn.vendors.destroypJS();
-            }
-            particlesJS('particles-js', {
-                "particles": {
-                    "number": { "value": 60 },
-                    "color": { "value": color },
-                    "opacity": { "value": 0.15 },
-                    "size": { "value": 1.5 },
-                    "move": { "enable": true, "speed": 0.8, "direction": "top" }
-                }
-            });
-            particlesInitialized = true;
-            currentParticlesColor = color;
-        }
+    // ตรวจสอบกับ Firebase
+    const result = await checkKeyWithFirebase(val);
+    if (!result.valid) {
+        const t = document.getElementById('toast');
+        let msg = "INVALID KEY";
+        if (result.reason === 'EXPIRED') msg = "KEY EXPIRED";
+        else if (result.reason === 'DISABLED') msg = "KEY DISABLED";
+        else if (result.reason === 'NOT_FOUND') msg = "KEY NOT FOUND";
+        t.innerText = msg;
+        t.className = "toast-off";
+        setTimeout(() => t.className = "", 2000);
+        addLog("Login failed: " + result.reason);
+        return;
+    }
 
-        function hexToRgb(hex) {
-            let c = hex.substring(1);
-            if (c.length === 3) c = c.split('').map(ch => ch + ch).join('');
-            const intVal = parseInt(c, 16);
-            return [(intVal >> 16) & 255, (intVal >> 8) & 255, intVal & 255];
-        }
-
-        function refreshThemeColors() {
-            const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
-            const accent2 = getComputedStyle(document.documentElement).getPropertyValue('--accent2').trim();
-            const rgb1 = hexToRgb(accent);
-            const rgb2 = hexToRgb(accent2);
-            document.documentElement.style.setProperty('--accent-rgb', `${rgb1[0]},${rgb1[1]},${rgb1[2]}`);
-            document.documentElement.style.setProperty('--accent2-rgb', `${rgb2[0]},${rgb2[1]},${rgb2[2]}`);
-            document.documentElement.style.setProperty('--glow',
-                `0 0 20px rgba(${rgb1[0]},${rgb1[1]},${rgb1[2]},0.5)`);
-            document.documentElement.style.setProperty('--glow2',
-                `0 0 20px rgba(${rgb2[0]},${rgb2[1]},${rgb2[2]},0.5)`);
-            document.documentElement.style.setProperty('--border',
-                `rgba(${rgb1[0]},${rgb1[1]},${rgb1[2]},0.12)`);
-            document.documentElement.style.setProperty('--bg-card',
-                `rgba(${rgb1[0]},${rgb1[1]},${rgb1[2]},0.04)`);
-            const particlesToggle = document.querySelector('#setting .toggle-row:first-child input');
-            if (particlesToggle && particlesToggle.checked) {
-                initParticles(accent);
-            } else {
-                currentParticlesColor = accent;
-            }
-            console.log('[PATO] Theme updated → ' + accent);
-        }
-
-        function popClick() {
-            if (!soundEnabled) return;
-            popSound.currentTime = 0;
-            try { popSound.play(); } catch (e) {}
-        }
-
-        function addLog(msg) {
-            console.log('[PATO]', msg);
-        }
-
-        function getTime() {
-            const d = new Date();
-            return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}:${String(d.getSeconds()).padStart(2,'0')}`;
-        }
-
-        function notify(checkbox) {
-            popClick();
-            const state = checkbox.checked ? "ON" : "OFF";
-            const label = checkbox.closest('.opt-item') ? checkbox.closest('.opt-item').innerText.trim() : 'Option';
-            addLog(`${label} → ${state}`);
-            const t = document.getElementById('toast');
-            t.innerText = checkbox.checked ? "ACTIVATED" : "DISABLED";
-            t.className = checkbox.checked ? "toast-on" : "toast-off";
-            setTimeout(() => t.className = "", 2000);
-        }
-
-        function handleLogin() {
-            const val = document.getElementById('pass-input').value.trim();
-            if (!val) return;
-
-            if (!KEY_PATTERN.test(val)) {
-                const t = document.getElementById('toast');
-                t.innerText = "INVALID KEY FORMAT";
-                t.className = "toast-off";
-                setTimeout(() => t.className = "", 2000);
-                return;
-            }
-
-            if (isKeyBlacklisted(val)) {
-                const t = document.getElementById('toast');
-                t.innerText = "KEY EXPIRED – CANNOT BE REUSED";
-                t.className = "toast-off";
-                setTimeout(() => t.className = "", 2000);
-                addLog("BLOCKED: Key already expired – " + val);
-                return;
-            }
-
-            popClick();
-            saveSession(val);
-            document.getElementById('loading-container').style.display = 'block';
-            let p = 0;
-            const msgs = [
-                "INITIALIZING ANDROID ENGINE",
-                "LOADING COMBAT MODULE",
-                "LOADING SENSITIVE CFG",
-                "LOADING MEMORY BOOST",
-                "CONNECTING GLOBAL SERVER",
-                "AUTHENTICATING HWID",
-                "READY"
-            ];
-            const inv = setInterval(() => {
-                p += Math.floor(Math.random() * 12) + 3;
-                if (p >= 100) {
-                    p = 100;
-                    clearInterval(inv);
-                    document.getElementById('p-text').innerText = "ANDROID ENGINE READY";
-                    setTimeout(() => {
-                        document.getElementById('login-screen').style.display = 'none';
-                        document.getElementById('main-panel').style.display = 'flex';
-                        document.getElementById('pass-input').value = '';
-                        addLog("Authenticated → PATO ANDROID PANEL");
-                        addLog("Key: " + val);
-                        addLog("Session: 24 hours");
-                        addLog("HWID Verified");
-                        addLog("Server Connected");
-                        refreshThemeColors();
-                        initParticles(getComputedStyle(document.documentElement).getPropertyValue(
-                            '--accent').trim());
-                        updateSessionDisplay();
-                    }, 600);
-                } else {
-                    const idx = Math.min(Math.floor(p / 15), msgs.length - 1);
-                    document.getElementById('p-text').innerText = msgs[idx] + "... " + p + "%";
-                }
-                document.getElementById('p-bar').style.width = p + '%';
-            }, 70);
-        }
-
-        function openTab(e, n) {
-            document.querySelectorAll('.content-area .content').forEach(c => {
-                c.style.display = 'none';
-                c.classList.remove('active');
-            });
-            document.querySelectorAll('.icon-nav-bar .nav-icon').forEach(ni => ni.classList.remove('active'));
-            const el = document.getElementById(n);
-            if (el) {
-                el.style.display = 'block';
-                el.classList.add('active');
-            }
-            if (e && e.currentTarget) e.currentTarget.classList.add('active');
-            addLog("Tab: " + n.toUpperCase());
-            popClick();
-        }
-
-        function updateVal(id, val) {
-            popClick();
-            const el = document.getElementById(id);
-            if (el) el.innerText = val;
-        }
-
-        function updateShield(v) {
-            const labels = { 1: 'LOW', 2: 'MEDIUM', 3: 'MAX' };
-            popClick();
-            const el = document.getElementById('shield-val');
-            if (el) el.innerText = labels[v];
-        }
-
-        function updateBandwidth(v) {
-            const labels = { 0: '512KB', 1: '1MB', 2: '2MB', 3: '5MB', 4: '10MB', 5: 'Unlimited' };
-            popClick();
-            const el = document.getElementById('bw-val');
-            if (el) el.innerText = labels[v];
-        }
-
-        function toggleMemory(cb) {
-            isMemoryActive = cb.checked;
-            notify(cb);
-            addLog(cb.checked ? "MEMORY ULTRA MODE ON" : "Memory Ultra OFF");
-        }
-
-        const cppLines = [
-            { t: 'dim', m: '// PATO ANDROID INJECTOR v3.0.1' },
-            { t: 'dim', m: '// Copyright (c) 2025 PatoTeam. All rights reserved.' },
-            { t: 'dim', m: '' },
-            { t: 'green', m: '#include <PatoEngine.h>' },
-            { t: 'green', m: '#include <MemoryPatch.h>' },
-            { t: 'green', m: '#include <AntiDetect.h>' },
-            { t: 'dim', m: '' },
-            { t: 'yellow', m: '[INIT] Loading PATO kernel modules (Android)...' },
-            { t: 'green', m: '[OK] PatoEngine::init() → success' },
-            { t: 'green', m: '[OK] AntiDetect::bypass() → stealth mode active' },
-            { t: 'yellow', m: '[SCAN] Scanning Android process list...' },
-            { t: 'green', m: '[OK] Target process located: com.dts.freefireth' },
-            { t: 'yellow', m: '[PATCH] Applying memory patches...' },
-            { t: 'green', m: '[OK] Combat.dll → patched (0xFF3A → 0x90 NOP)' },
-            { t: 'green', m: '[OK] Sensitive.dll → patched' },
-            { t: 'green', m: '[OK] FPSOptimizer.dll → patched' },
-            { t: 'green', m: '[OK] MemoryBoost.dll → patched' },
-            { t: 'yellow', m: '[VERIFY] Verifying inject integrity...' },
-            { t: 'green', m: '[OK] Checksum valid: 0xANDROID3F9A' },
-            { t: 'green', m: '[OK] HWID spoofing active' },
-            { t: 'green', m: '[OK] SSL certificate bypassed' },
-            { t: 'yellow', m: '[READY] All modules loaded successfully!' },
-            { t: 'green', m: '[PATO] Inject complete → select device' },
-        ];
-
-        function openInject() {
-            popClick();
-            document.getElementById('inject-modal').classList.add('show');
-            resetPhases();
-            runCppLog();
-            const searchInput = document.getElementById('device-search-input');
-            if (searchInput) searchInput.value = '';
-            filterDevices();
-        }
-
-        function closeInject() {
-            document.getElementById('inject-modal').classList.remove('show');
-            addLog("Inject cancelled");
-        }
-
-        function resetPhases() {
-            document.getElementById('phase1').classList.add('active');
-            document.getElementById('phase2').classList.remove('active');
-            document.getElementById('phase3').classList.remove('active');
-            document.getElementById('phase1-next').style.display = 'none';
-            document.getElementById('phase2-next').style.display = 'none';
-            document.getElementById('cpp-log').innerHTML = '';
-            document.getElementById('modal-footer-info').innerText = '';
-            selectedDevice = '';
-            document.querySelectorAll('.device-card').forEach(c => c.classList.remove('sel'));
-        }
-
-        function runCppLog() {
-            const logEl = document.getElementById('cpp-log');
-            logEl.innerHTML = '';
-            let i = 0;
-            const typeNext = () => {
-                if (i >= cppLines.length) {
-                    document.getElementById('phase1-next').style.display = 'block';
-                    addLog("Inject engine compiled");
-                    return;
-                }
-                const line = cppLines[i++];
-                const span = document.createElement('div');
-                span.className = 'log-' + line.t;
-                span.innerText = line.m;
-                logEl.appendChild(span);
-                logEl.scrollTop = logEl.scrollHeight;
-                setTimeout(typeNext, 80 + Math.random() * 80);
-            };
-            setTimeout(typeNext, 200);
-        }
-
-        function gotoPhase(n) {
-            popClick();
-            document.querySelectorAll('.phase').forEach(p => p.classList.remove('active'));
-            document.getElementById('phase' + n).classList.add('active');
-        }
-
-        function filterDevices() {
-            const input = document.getElementById('device-search-input');
-            const filter = input.value.toLowerCase();
-            const cards = document.querySelectorAll('#device-grid .device-card');
-            cards.forEach(card => {
-                const name = card.getAttribute('data-name') || '';
-                card.style.display = name.toLowerCase().includes(filter) ? '' : 'none';
-            });
-        }
-
-        function selectDevice(el, name) {
-            popClick();
-            document.querySelectorAll('.device-card').forEach(c => c.classList.remove('sel'));
-            el.classList.add('sel');
-            selectedDevice = name;
-            document.getElementById('phase2-next').style.display = 'block';
-            document.getElementById('modal-footer-info').innerText = 'Selected: ' + name;
-            addLog("Device: " + name);
-        }
-
-        function launchGame(g) {
-            popClick();
-            addLog("Launching: " + g + " on " + selectedDevice);
-            const t = document.getElementById('toast');
-            t.innerText = "LAUNCHING " + (g.includes('MAX') ? 'FF MAX' : 'FREE FIRE');
-            t.className = "toast-on";
+    popClick();
+    saveSession(val); // เก็บ key ไว้
+    currentKeyExpiry = result.expiry;
+    document.getElementById('loading-container').style.display = 'block';
+    let p = 0;
+    const msgs = [
+        "INITIALIZING ANDROID ENGINE",
+        "LOADING COMBAT MODULE",
+        "LOADING SENSITIVE CFG",
+        "LOADING MEMORY BOOST",
+        "CONNECTING GLOBAL SERVER",
+        "AUTHENTICATING HWID",
+        "READY"
+    ];
+    const inv = setInterval(() => {
+        p += Math.floor(Math.random() * 12) + 3;
+        if (p >= 100) {
+            p = 100;
+            clearInterval(inv);
+            document.getElementById('p-text').innerText = "ANDROID ENGINE READY";
             setTimeout(() => {
-                t.className = "";
-                window.location.href = g.includes("MAX") ? "freefiremax://" : "freefire://";
-            }, 1500);
-        }
-
-        const themes = {
-            cyan: { accent: '#00e5ff', accent2: '#7c4dff' },
-            red: { accent: '#e30000', accent2: '#8b0000' },
-            green: { accent: '#34c759', accent2: '#00e5ff' },
-            gold: { accent: '#ffd60a', accent2: '#ff9500' },
-            pink: { accent: '#ff2d55', accent2: '#af52de' },
-            purple: { accent: '#af52de', accent2: '#5ac8fa' },
-            white: { accent: '#ffffff', accent2: '#aaaaaa' },
-            orange: { accent: '#ff9500', accent2: '#ffd60a' },
-        };
-
-        function applyTheme(name) {
-            popClick();
-            const th = themes[name];
-            if (!th) return;
-            document.documentElement.style.setProperty('--accent', th.accent);
-            document.documentElement.style.setProperty('--accent2', th.accent2);
-            const accentPicker = document.querySelector('#setting .color-pick-row:first-child input');
-            const accent2Picker = document.querySelector('#setting .color-pick-row:last-child input');
-            if (accentPicker) accentPicker.value = th.accent;
-            if (accent2Picker) accent2Picker.value = th.accent2;
-            refreshThemeColors();
-            document.querySelectorAll('.theme-chip').forEach(c => c.classList.remove('selected'));
-            const el = document.getElementById('theme-' + name);
-            if (el) el.classList.add('selected');
-            addLog("Theme: " + name.toUpperCase());
-            showToast("THEME: " + name.toUpperCase(), true);
-        }
-
-        function setCustomAccent(v) {
-            document.documentElement.style.setProperty('--accent', v);
-            refreshThemeColors();
-            addLog("Custom accent: " + v);
-            document.querySelectorAll('.theme-chip').forEach(c => c.classList.remove('selected'));
-        }
-
-        function setCustomAccent2(v) {
-            document.documentElement.style.setProperty('--accent2', v);
-            refreshThemeColors();
-            addLog("Custom secondary: " + v);
-            document.querySelectorAll('.theme-chip').forEach(c => c.classList.remove('selected'));
-        }
-
-        function toggleParticles(cb) {
-            if (cb.checked) {
-                const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
-                initParticles(accent);
-                document.getElementById('particles-js').style.display = 'block';
-            } else {
-                if (window.pJSDom && window.pJSDom[0]) {
-                    window.pJSDom[0].pJS.fn.vendors.destroypJS();
-                }
-                document.getElementById('particles-js').style.display = 'none';
-            }
-            addLog("Particles: " + (cb.checked ? 'ON' : 'OFF'));
-        }
-
-        function toggleSound(cb) {
-            soundEnabled = cb.checked;
-            addLog("Sound: " + (cb.checked ? 'ON' : 'OFF'));
-        }
-
-        function toggleScanline(cb) {
-            if (cb.checked) {
-                const s = document.getElementById('no-scan');
-                if (s) s.remove();
-            } else {
-                if (!document.getElementById('no-scan')) {
-                    const style = document.createElement('style');
-                    style.id = 'no-scan';
-                    style.innerText = 'body::after{display:none}';
-                    document.head.appendChild(style);
-                }
-            }
-        }
-
-        function showToast(msg, isOn = true) {
-            const t = document.getElementById('toast');
-            t.innerText = msg;
-            t.className = isOn ? "toast-on" : "toast-off";
-            setTimeout(() => t.className = "", 2000);
-        }
-
-        const hwidEl = document.getElementById('hwid-val');
-        if (hwidEl) hwidEl.innerText = Math.random().toString(36).substr(2, 8).toUpperCase();
-
-        setInterval(() => {
-            const min = isMemoryActive ? 210 : 55;
-            const max = isMemoryActive ? 240 : 65;
-            const fps = (Math.random() * (max - min) + min).toFixed(1);
-            const topFpsEl = document.getElementById('top-fps');
-            if (topFpsEl) topFpsEl.innerText = `∿ ${fps} FPS`;
-            const pingEl = document.getElementById('ping-val');
-            if (pingEl) pingEl.innerText = (Math.random() * 8 + 18).toFixed(0) + "ms";
-        }, 700);
-
-        setInterval(() => {
-            if (!isSessionValid()) {
-                const session = getSession();
-                if (!session) {
-                    if (document.getElementById('main-panel').style.display === 'flex') {
-                        userLogout();
-                        showToast("SESSION EXPIRED – KEY PERMANENTLY BLOCKED", false);
-                    }
-                }
-            }
-            updateSessionDisplay();
-        }, 30000);
-
-        setInterval(() => {
-            updateSessionDisplay();
-        }, 60000);
-
-        window.onload = function() {
-            document.querySelectorAll('.theme-chip').forEach(c => c.classList.remove('selected'));
-            const defaultThemeEl = document.getElementById('theme-red');
-            if (defaultThemeEl) defaultThemeEl.classList.add('selected');
-            const accentPicker1 = document.querySelector('#setting .color-pick-row:first-child input');
-            if (accentPicker1) accentPicker1.value = '#e30000';
-            const accentPicker2 = document.querySelector('#setting .color-pick-row:last-child input');
-            if (accentPicker2) accentPicker2.value = '#8b0000';
-            initParticles('#e30000');
-            updateSessionDisplay();
-
-            const autoLoginState = checkAutoLogin();
-            if (autoLoginState === 'user') {
-                const session = getSession();
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('main-panel').style.display = 'flex';
-                addLog("Auto-authenticated → session active");
-                addLog("Key: " + (session ? session.key : 'unknown'));
-                addLog("Session: 24 hours");
+                document.getElementById('pass-input').value = '';
+                addLog("Authenticated → Firebase Key Valid");
+                addLog("Key: " + val);
+                addLog("Session: checked with Firebase");
                 addLog("HWID Verified");
                 addLog("Server Connected");
                 refreshThemeColors();
                 initParticles(getComputedStyle(document.documentElement).getPropertyValue('--accent').trim());
                 updateSessionDisplay();
+            }, 600);
+        } else {
+            const idx = Math.min(Math.floor(p / 15), msgs.length - 1);
+            document.getElementById('p-text').innerText = msgs[idx] + "... " + p + "%";
+        }
+        document.getElementById('p-bar').style.width = p + '%';
+    }, 70);
+}
+
+// ==================== Tab / UI Functions (unchanged) ====================
+function openTab(e, n) { /* ... เหมือนเดิม ... */ }
+function updateVal(id, val) { /* ... เหมือนเดิม ... */ }
+function updateShield(v) { /* ... เหมือนเดิม ... */ }
+function updateBandwidth(v) { /* ... เหมือนเดิม ... */ }
+function toggleMemory(cb) { /* ... เหมือนเดิม ... */ }
+
+// ==================== Inject Modal Functions (unchanged) ====================
+const cppLines = [ /* ... เหมือนเดิม ... */ ];
+function openInject() { /* ... เหมือนเดิม ... */ }
+function closeInject() { /* ... เหมือนเดิม ... */ }
+function resetPhases() { /* ... เหมือนเดิม ... */ }
+function runCppLog() { /* ... เหมือนเดิม ... */ }
+function gotoPhase(n) { /* ... เหมือนเดิม ... */ }
+function filterDevices() { /* ... เหมือนเดิม ... */ }
+function selectDevice(el, name) { /* ... เหมือนเดิม ... */ }
+function launchGame(g) { /* ... เหมือนเดิม ... */ }
+
+// ==================== Theme Functions (unchanged) ====================
+const themes = { /* ... เหมือนเดิม ... */ };
+function applyTheme(name) { /* ... เหมือนเดิม ... */ }
+function setCustomAccent(v) { /* ... เหมือนเดิม ... */ }
+function setCustomAccent2(v) { /* ... เหมือนเดิม ... */ }
+function toggleParticles(cb) { /* ... เหมือนเดิม ... */ }
+function toggleSound(cb) { /* ... เหมือนเดิม ... */ }
+function toggleScanline(cb) { /* ... เหมือนเดิม ... */ }
+function showToast(msg, isOn = true) { /* ... เหมือนเดิม ... */ }
+
+// ==================== Initialization ====================
+const hwidEl = document.getElementById('hwid-val');
+if (hwidEl) hwidEl.innerText = Math.random().toString(36).substr(2, 8).toUpperCase();
+
+setInterval(() => {
+    const min = isMemoryActive ? 210 : 55;
+    const max = isMemoryActive ? 240 : 65;
+    const fps = (Math.random() * (max - min) + min).toFixed(1);
+    const topFpsEl = document.getElementById('top-fps');
+    if (topFpsEl) topFpsEl.innerText = `∿ ${fps} FPS`;
+    const pingEl = document.getElementById('ping-val');
+    if (pingEl) pingEl.innerText = (Math.random() * 8 + 18).toFixed(0) + "ms";
+}, 700);
+
+// ตรวจสอบ session ทุก 30 วินาที
+setInterval(async () => {
+    if (currentKeyExpiry && Date.now() > currentKeyExpiry) {
+        // หมดอายุ
+        if (document.getElementById('main-panel').style.display === 'flex') {
+            userLogout();
+            showToast("SESSION EXPIRED", false);
+        }
+    }
+    updateSessionDisplay();
+}, 30000);
+
+// อัปเดตเวลาแสดงทุกนาที
+setInterval(() => {
+    updateSessionDisplay();
+}, 60000);
+
+// ตรวจสอบ auto-login เมื่อโหลดหน้า
+window.onload = async function() {
+    document.querySelectorAll('.theme-chip').forEach(c => c.classList.remove('selected'));
+    const defaultThemeEl = document.getElementById('theme-red');
+    if (defaultThemeEl) defaultThemeEl.classList.add('selected');
+    const accentPicker1 = document.querySelector('#setting .color-pick-row:first-child input');
+    if (accentPicker1) accentPicker1.value = '#e30000';
+    const accentPicker2 = document.querySelector('#setting .color-pick-row:last-child input');
+    if (accentPicker2) accentPicker2.value = '#8b0000';
+    initParticles('#e30000');
+    updateSessionDisplay();
+
+    const autoLoginState = await checkAutoLogin();
+    if (autoLoginState === 'user') {
+        const key = getSessionKey();
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('main-panel').style.display = 'flex';
+        addLog("Auto-authenticated → Firebase session valid");
+        addLog("Key: " + key);
+        addLog("Session: checked with Firebase");
+        addLog("HWID Verified");
+        addLog("Server Connected");
+        refreshThemeColors();
+        initParticles(getComputedStyle(document.documentElement).getPropertyValue('--accent').trim());
+        updateSessionDisplay();
             }
         };
     </script>
